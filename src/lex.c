@@ -54,6 +54,9 @@ void lex() {
 			printf("\r[lex] demote:  \"%s\"\n", infnamev[lexf->fi]);
 			fflush(stdout);}}
 	
+	printf("\r[lex] exit\n");
+	fflush(stdout);
+
 	// free lex struct
 	lexkill();}
 
@@ -78,7 +81,8 @@ static void lexinit() {
 	lexer.keywv = malloc(sizeof(char*) * 2); lexer.keywc = 2;
 	lexer.sectv = malloc(sizeof(char*) * 5); lexer.sectc = 5;
 	lexer.typev = malloc(sizeof(char*) * 8); lexer.typec = 8;
-	
+	lexer.varv = malloc(sizeof(struct var_s) * 2); lexer.varc = 2;
+
 	// create directives
 	lexer.dirv[0] = "#if";
 	lexer.dirv[1] = "#asm";
@@ -103,7 +107,11 @@ static void lexinit() {
 	lexer.typev[4] = "schar";
 	lexer.typev[5] = "sshort";
 	lexer.typev[6] = "sint";
-	lexer.typev[7] = "slong";}
+	lexer.typev[7] = "slong";
+
+	// create vars (dynamic, temporarily static)
+	lexer.varv[0] = (struct var_s){"varg", 0, 0, 0};
+	lexer.varv[1] = (struct var_s){"vargw", 0, 0, 0};}
 
 static void lexkill() {
 	free(lexer.dirv);
@@ -153,11 +161,10 @@ static struct lexf_s* lexfkill(struct lexf_s* lexf) {
 		return 0;}}
 
 static void lexfprog(struct lexf_s* lexf) {
-	if (!lexf->str[lexf->stri]) return;
-	
 	prog:
 	lexf->tkn = -1;
 	lexprint(lexf);
+	if (!lexf->str[lexf->stri]) return;
 	switch (lexf->str[lexf->stri]) {
 	// ignore
 	case '\n':
@@ -377,174 +384,200 @@ static void lexfprog(struct lexf_s* lexf) {
 		lexf->tkn = CBRACK;
 		goto settkn;
 	settkn:
-		lexf->tknpi = lexer.tknc;
-		lexer.tknv = realloc(lexer.tknv, ++lexer.tknc);
-		lexer.tknv[lexer.tknc - 1] = lexf->tkn;
+		//lexf->tknpi = lexer.tknc;
+		//lexer.tknv = realloc(lexer.tknv, ++lexer.tknc);
+		//lexer.tknv[lexer.tknc - 1] = lexf->tkn;
 		++lexf->stri;
 		lexf->strtkni = lexf->stri;
 		break;
 	case ':':
-		lexf->flgvariable = 0;
+		lexf->flgdef = 0;
 		++lexf->stri;
 		lexf->strtkni = lexf->stri;
 		goto vardef;
 	case ';':
-		lexf->flgvariable = lexf->flgassembly = lexf->flginclude = 0;
+		lexf->flgdef = lexf->flgassembly = lexf->flginclude = 0;
 		++lexf->stri;
 		lexf->strtkni = lexf->stri;
 		goto vardef;
 	vardef:
-		if (!lexf->variable || !lexf->variable->keyw) break;
-	
-		long tknvi = 0;
-		if (strcmp(*lexf->variable->keyw, "inline") == 0) {
+		if (!lexf->def.name) break;
+		
+		long tknvali = 0;
+		if (lexf->def.keyw && strcmp(*lexf->def.keyw, "inline") == 0) {
 			lexf->tkn = INLINEDEF;
-			tknvi = lexer.inlinec;
+			tknvali = lexer.inlinec;
 			lexer.inlinev = realloc(lexer.inlinev, sizeof(char*) * ++lexer.inlinec);
-			lexer.inlinev[tknvi] = lexf->variable->name;}
-		else if (strcmp(*lexf->variable->keyw, "struct") == 0) {
+			lexer.inlinev[tknvali] = lexf->def.name;}
+		else if (lexf->def.keyw && strcmp(*lexf->def.keyw, "struct") == 0) {
 			lexf->tkn = STRUCTDEF;
-			tknvi = lexer.structc;
-			lexer.structv = realloc(lexer.structv, sizeof(char*) * ++lexer.structc);
-		       	lexer.structv[tknvi] = (struct struct_s){lexf->variable->name, 0, 0};}
+			tknvali = lexer.structc;
+			lexer.structv = realloc(lexer.structv, sizeof(struct struct_s) * ++lexer.structc);
+		       	lexer.structv[tknvali] = (struct struct_s){lexf->def.name, 0, 0};}
 		else {
 			lexf->tkn = VARDEF;
-			tknvi = lexer.varc;
+			tknvali = lexer.varc;
 			lexer.varv = realloc(lexer.varv, sizeof(struct var_s) * ++lexer.varc);
-			lexer.varv[tknvi] = *lexf->variable;}
+			lexer.varv[tknvali] = (struct var_s){strdup(lexf->def.name), lexf->def.sect, lexf->def.type, lexf->def.struct_};}
 		
 		lexf->tknpi = lexer.tknc;
-		lexer.tknv = realloc(lexer.tknv, lexer.tknc += 1 + sizeof(void*));
-		memcpy(lexer.tknv + lexer.tknc - 8, &tknvi, sizeof(void*));
+		lexer.tknv = realloc(lexer.tknv, lexer.tknc += 1 + sizeof(long));
+		memcpy(lexer.tknv + lexer.tknc - sizeof(long), &tknvali, sizeof(long));
 		lexer.tknv[lexer.tknc - 9] = lexf->tkn;
 		
-		lexf->variable = 0;
+		memset(&lexf->def, 0, sizeof(struct def_s));
 		
 		break;
-	case '\'':
-		lexf->tkn = CHAR;
-		goto settknstr;
-	case '"': 
-		lexf->tkn = STR;
-		goto settknstr;
-	default:
-	settknstr: {
-		// if previous token is asm directive (doesnt get tokenized), tokenize rest until ; as [ASSEMBLY:literal string]
-		lexf->tkn = lexf->flgassembly ? ASSEMBLY : (
-		// if previous token is asm directive, tokenize rest until ; as [DIRECTORY:literal string]
-			lexf->flginclude ? INCLUDE : lexf->tkn);
+	default: {
+		// set tkn to relevant enum value
+		lexf->tkn = 
+		// from flags
+			lexf->flgassembly ? ASSEMBLY : (
+			lexf->flginclude ? INCLUDE : (
+		// from character
+			lexf->str[lexf->strtkni] == '\'' || (lexf->str[lexf->strtkni] >= '0' && lexf->str[lexf->strtkni] <= '9') ? LONG : (
+			lexf->str[lexf->strtkni] == '\"' ? STR : -1)));
+		
 		// kill flags
 		lexf->flgassembly = lexf->flginclude = 0;
 
-		// if current char is numeric, tokenize [LONG:literal long]
-		lexf->tkn = lexf->tkn == -1 && lexf->str[lexf->strtkni] >= '0' && lexf->str[lexf->strtkni] <= '9' ? LONG : lexf->tkn;
-		// if squote, tokenize [CHAR:literal char]
-		// if dquote, tokenize [STR:literal string]
-		// if hashtag, tokenize [DIRECTIVE:literal string]
+		// get the index of the new token, thus marking a boundary in str which is relevant for the next tokenization
+		int strnewtkni = lexf->strtkni;
+		switch (lexf->tkn) {
+		// if assembly or include, select until semicolon
+		case ASSEMBLY:
+		case INCLUDE:
+			while (lexf->str[strnewtkni] != ';') ++strnewtkni;
+			break;
+		// if str, select until next dquote, unless a backslash precedes the dquote
+		case STR:
+			while (strnewtkni <= lexf->strtkni + 2 || lexf->str[strnewtkni - 1] != '"' || (strnewtkni > 0 && lexf->str[strnewtkni - 2] == '\\')) ++strnewtkni;
+			break;
+		// if long or uninitialized tkn, select while
+		case LONG:
+		case -1:
+		// # if its the first character OR
+			while ((lexf->str[strnewtkni] == '#' && lexf->strtkni == strnewtkni)
+		// underscore OR
+				|| lexf->str[strnewtkni] == '_' 
+		// alphanumeric
+				|| (lexf->str[strnewtkni] >= 'a' && lexf->str[strnewtkni] <= 'z') 
+				|| (lexf->str[strnewtkni] >= 'A' && lexf->str[strnewtkni] <= 'Z') 
+				|| (lexf->str[strnewtkni] >= '0' && lexf->str[strnewtkni] <= '9')) ++strnewtkni;}
 		
-		// skip to relevant part
-		if (lexf->tkn == CHAR || lexf->tkn == STR) ++lexf->strtkni;
-		
-		int ntkni = lexf->strtkni;
-		while (((lexf->tkn == ASSEMBLY || lexf->tkn == INCLUDE) && lexf->str[ntkni] != ';') || 
-			(lexf->tkn == CHAR && ntkni == lexf->strtkni) || 
-			(lexf->tkn == STR && (lexf->str[ntkni] != '"' || (ntkni > 0 && lexf->str[ntkni - 1] == '\\'))) || 
-			((lexf->tkn == LONG || lexf->tkn == -1) 
-				&& ((lexf->str[ntkni] == '#' && lexf->strtkni == ntkni) 
-				|| (lexf->str[ntkni] == '_' || (lexf->str[ntkni] >= 'a' && lexf->str[ntkni] <= 'z') || (lexf->str[ntkni] >= 'A' && lexf->str[ntkni] <= 'Z') || (lexf->str[ntkni] >= '0' && lexf->str[ntkni] <= '9'))))) 
-			++ntkni;
-		
-		// invalid?
-		if (lexf->strtkni == ntkni) {
+		// invalid? just ignore it...
+		if (lexf->strtkni == strnewtkni) {
 			++lexf->stri;
 			lexf->strtkni = lexf->stri;
 			break;}
 		
-		int tknstrlen = ntkni - lexf->strtkni;
+		// alloc tknstr from strnewtkni and strtkni (old token index)
+		int tknstrlen = strnewtkni - lexf->strtkni;
 		char* tknstr = malloc(tknstrlen + 1);
 		memcpy(tknstr, lexf->str + lexf->strtkni, tknstrlen);
 		tknstr[tknstrlen] = 0;
 		
-		// append data structures
-		long tknvi;
+		// append data structures from initialized tkn
+		long tknvali; // the index of the relevant value in the tokens relevant data structure
 		if (lexf->tkn == STR) {
+			char* str = malloc(tknstrlen - 1);
+			memcpy(str, tknstr + 1, tknstrlen - 2);
+			str[tknstrlen] = 0;
+			
+			tknvali = lexer.strc;
 			lexer.strv = realloc(lexer.strv, sizeof(char*) * ++lexer.strc);
-			lexer.strv[lexer.strc - 1] = strdup(tknstr);
-			tknvi = lexer.strc - 1;}
+			lexer.strv[lexer.strc - 1] = str;}
 		else if (lexf->tkn == LONG) {
-			int base = lexf->str[lexf->stri] != '0' ? 10 : (
-				lexf->str[lexf->stri + 1] == 'b' ? 2 : (
-				lexf->str[lexf->stri + 1] == 'x' ? 16 : 
-				8));
-			char* strnum = lexf->str[lexf->stri] != '0' ? lexf->str + lexf->stri : lexf->str + lexf->stri + 2;
+			long l;
+			if (tknstr[0] == '\'') {
+				l = (long)tknstr[1];}
+			else {
+				int base = tknstr[0] != '0' ? 10 : (
+					tknstr[1] == 'b' ? 2 : (
+					tknstr[1] == 'x' ? 16 : 
+					8));
+				char* strnum = tknstr[0] != '0' ? tknstr : tknstr + 2;
+				l = strtol(strnum, 0, base);}
+			
+			tknvali = lexer.longc;
 			lexer.longv = realloc(lexer.longv, sizeof(long) * ++lexer.longc);
-			lexer.longv[lexer.longc - 1] = strtol(strnum, NULL, base);
-			tknvi = lexer.longc - 1;}
+			lexer.longv[lexer.longc - 1] = l;}
 		else if (lexf->tkn == ASSEMBLY) {
+			tknvali = lexer.asmc;
 			lexer.asmv = realloc(lexer.asmv, sizeof(char*) * ++lexer.asmc);
-			lexer.asmv[lexer.asmc - 1] = strdup(tknstr);
-			tknvi = lexer.asmc - 1;}
+			lexer.asmv[lexer.asmc - 1] = strdup(tknstr);}
 		else if (lexf->tkn == INCLUDE) {
+			tknvali = lexer.fc;
 			lexer.fv = realloc(lexer.fv, sizeof(char*) * ++lexer.fc);
-			lexer.fv[lexer.fc - 1] = strdup(tknstr);
-			tknvi = lexer.fc - 1;}
+			lexer.fv[lexer.fc - 1] = strdup(tknstr);}
+		
+		// append data structures from uninitialized tkn
 		else if (lexf->tkn == -1) {
-			if (strcmp(tknstr, "#asm") == 0) {
-				lexf->flgassembly = 1;
-				goto disctkn;}
-			else if (strcmp(tknstr, "#include") == 0) {
-				lexf->flginclude = 1;
-				goto disctkn;}
+			// if not preparing for a definition (marked by flgdef),
+			if (!lexf->flgdef) {
+				// dont tokenize, and set relevant flags if strtkn is a certain string (good for skipping unnecessary logic)
+				if (strcmp(tknstr, "#asm") == 0) {
+					lexf->flgassembly = 1;
+					goto disctkn;}
+				else if (strcmp(tknstr, "#include") == 0) {
+					lexf->flginclude = 1;
+					goto disctkn;}
+				
+				// tokenize, and set tkn to relevant enum value from tknstr
+				for (int i = 0; i < lexer.dirc; ++i)
+					if (strcmp(lexer.dirv[i], tknstr) == 0) {
+						lexf->tkn = DIRECTIVE;
+						tknvali = i;
+						goto keeptkn;}
+				for (int i = 0; i < lexer.varc; ++i)
+					if (lexer.varv[i].name && strcmp(lexer.varv[i].name, tknstr) == 0) {
+						tknvali = i;
+						lexf->tkn = VAR;
+						goto keeptkn;}
+				for (int i = 0; i < lexer.inlinec; ++i)
+					if (strcmp(lexer.inlinev[i], tknstr) == 0) {
+						tknvali = i;
+						lexf->tkn = INLINE;
+						goto keeptkn;}
+				
+				// if none of the previous logic was able to set tkn from tknstr, create a def object that prepares for a new structdef, vardef, inlinedef, etc..
+				lexf->def = (struct def_s){0, 0, 0, 0, 0};
+				lexf->flgdef = 1;}
 			
-			for (int i = 0; i < lexer.inlinec; ++i)
-				if (strcmp(lexer.inlinev[i], tknstr) == 0) {
-					tknvi = i;
-					lexf->tkn = INLINE;
-					goto keeptkn;}
-			for (int i = 0; i < lexer.dirc; ++i)
-				if (strcmp(lexer.dirv[i], tknstr) == 0) {
-					tknvi = i;
-					lexf->tkn = DIRECTIVE;
-					goto keeptkn;}
-			for (int i = 0; i < lexer.varc; ++i)
-				if (lexer.varv[i].name && strcmp(lexer.varv[i].name, tknstr) == 0) {
-					tknvi = i;
-					lexf->tkn = VAR;
-					goto keeptkn;}
-			
-			if (!lexf->flgvariable) {
-				lexf->variable = malloc(sizeof(struct var_s));
-				*lexf->variable = (struct var_s){strdup(""), 0, 0, 0, 0};
-				lexf->flgvariable = 1;}
-
+			// always discards the token beyond this point for the philosophy of preparing the def... the def finally gets defined upon a ; or a : of course.
+			// if preparing for a definition, append relevant data structures from tknstr
 			for (int i = 0; i < lexer.structc; ++i)
 				if (strcmp(lexer.structv[i].name, tknstr) == 0) {
-					lexf->variable->struct_ = &lexer.structv[i];
+					lexf->def.struct_ = &lexer.structv[i];
 					goto disctkn;}
 			for (int i = 0; i < lexer.sectc; ++i)
 				if (strcmp(lexer.sectv[i], tknstr) == 0) {
-					lexf->variable->sect = &lexer.sectv[i];
+					lexf->def.sect = &lexer.sectv[i];
 					goto disctkn;}
 			for (int i = 0; i < lexer.typec; ++i)
 				if (strcmp(lexer.typev[i], tknstr) == 0) {
-					lexf->variable->type = &lexer.typev[i];
+					lexf->def.type = &lexer.typev[i];
 					goto disctkn;}
 			for (int i = 0; i < lexer.keywc; ++i)
 				if (strcmp(lexer.keywv[i], tknstr) == 0) {
-					lexf->variable->keyw = &lexer.keywv[i];
+					lexf->def.keyw = &lexer.keywv[i];
 					goto disctkn;}
-		
-			free(lexf->variable->name);
-			lexf->variable->name = strdup(tknstr);
+
+			// if none of the previous logic was able to append a data structre from tknstr, set the defs name
+			free(lexf->def.name);
+			lexf->def.name = strdup(tknstr);
 			goto disctkn;}
-			
+		
+		// appends the tkn data structure	
 		keeptkn:
 		lexf->tknpi = lexer.tknc;
-		lexer.tknv = realloc(lexer.tknv, lexer.tknc += 1 + sizeof(void*));
-		memcpy(lexer.tknv + lexer.tknc - 8, &tknvi, sizeof(void*));
-		lexer.tknv[lexer.tknc - 9] = lexf->tkn;
+		lexer.tknv = realloc(lexer.tknv, lexer.tknc += 1 + sizeof(long));
+		memcpy(lexer.tknv + lexer.tknc - sizeof(long), &tknvali, sizeof(long));
+		lexer.tknv[lexer.tknc - sizeof(long) - 1] = lexf->tkn;
+		
+		// doesnt append the tkn data structure, and moves onto the next relevant character
 		disctkn:
-		lexf->stri = lexf->tkn == STR ? ntkni + 1 : ntkni;
+		lexf->stri = lexf->tkn == STR ? strnewtkni + 1 : strnewtkni;
 		lexf->strtkni = lexf->stri;
 		free(tknstr);
 		break;}}

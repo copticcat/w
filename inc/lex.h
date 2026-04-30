@@ -4,7 +4,6 @@
 
 struct var_s {
 	char* name;
-	char** keyw;
 	char** sect;
 	char** type;
 	struct struct_s* struct_;};
@@ -12,6 +11,13 @@ struct var_s {
 struct struct_s {
 	char* name;
 	struct var_s* memv; int memc;};
+
+struct def_s {
+	char* name;
+	char** keyw;
+	char** sect;
+	char** type;
+	struct struct_s* struct_;};
 
 struct lexf_s {
 	int fi;
@@ -26,8 +32,8 @@ struct lexf_s {
 	int tknpi;
 	int tknvardefi;
 
-	int flgvariable;	
-	struct var_s* variable;
+	struct def_s def;
+	int flgdef;	
 	int flgassembly;
 	int flginclude;};
 

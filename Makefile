@@ -11,8 +11,8 @@ $(BIN): $(OBJ)
 	$(CC) $(OBJ) -o $(BIN)
 
 run: $(BIN)
-	./$(BIN) demo/0.w -s 0.s
+	./$(BIN) demo/hw.w -s hw.s
 
 clean:
 	rm -f $(OBJ) $(BIN)
-	rm -f 0.s 
+	rm -f hw.s 

@@ -34,13 +34,13 @@ void lexprint(struct lexf_s* lexf) {
 			if (lexvv[lexvi].lexf == lexf) {
 				lexv = lexvv + lexvi;
 				break;}
+		if (!lexvi) memset(tknrowv, ' ', 48 * (8 + 64));
 		if (!lexv) {
 			lexvv = realloc(lexvv, sizeof(struct lexv_s) * ++lexvc);
 			lexv = lexvv + (lexvc - 1);
 			memset(lexv, 0, sizeof(struct lexv_s));
 			lexv->lexf = lexf;
-			memset(lexv->wrowv, ' ', 48 * (8 + 64));
-			memset(tknrowv, ' ', 48 * (8 + 64));}
+			memset(lexv->wrowv, ' ', 48 * (8 + 64));}
 		lexvicache = lexvi;}
 
 	int newline = 0;
@@ -154,7 +154,7 @@ void lexprint(struct lexf_s* lexf) {
 			k = "LONG";
 			static char str[32];
 			memset(str, 0, 32);
-			snprintf(str, 32, "%ld", *(long*)(lexer.tknv + tknvi + 1));
+			snprintf(str, 32, "%ld", lexer.longv[*(long*)(lexer.tknv + tknvi + 1)]);
 			v = str;
 			goto tknkv;
 		case INT: k = "INT"; v = ""; goto tknkv;
@@ -267,8 +267,8 @@ void lexprint(struct lexf_s* lexf) {
 		fflush(stdout);
 		newtoken = 0;
 
-		/*static struct timespec ts = {0, 1000000000/10};
-		nanosleep(&ts, 0);*/}
+		static struct timespec ts = {0, 1000000000/100};
+		nanosleep(&ts, 0);}
 	
 	if (newline) {
 		newline = 0;
