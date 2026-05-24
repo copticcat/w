@@ -1,275 +1,242 @@
 #include "../inc/print.h"
+#include "../inc/glob.h"
 #include "../inc/lex.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include <sys/ioctl.h>
+#include <math.h>
 
-struct lexv_s* lexvv; int lexvc;
+struct lexfv_s* lexfvv = 0; int lexfvc = 0;
+struct lexv_s lexv;
+struct lexav_s lexav;
 
-struct lexv_s {
-	struct lexf_s* lexf;
+static int lexfvicache = -1;
 
-	int strvi;
-	char wrowv[48 * (8 + 64)];
-	char w[64];
-	int wi;};
+void printinit() {
+	memset(&lexv, 0, sizeof(struct lexv_s));
+	memset(&lexav, 0, sizeof(struct lexav_s));
+	free(lexfvv);
+	lexfvv = 0;
+	lexfvc = 0;
+	lexfvicache = -1;}
 	
-static int tknvi;
-static int tknvc;
-static char tknrowv[48 * (8 + 64)];
-static int newtknrowi;
-
 void lexprint(struct lexf_s* lexf) {
-	static int lexvicache = -1;
-	struct lexv_s* lexv = 0;
+	struct lexfv_s* lexfv = 0;
 
-	if (lexvicache >= 0 && lexvv[lexvicache].lexf == lexf)
-		lexv = lexvv + lexvicache; 
+	if (lexfvicache >= 0 && lexfvv[lexfvicache].lexf == lexf)
+		lexfv = lexfvv + lexfvicache; 
 	else {
-		// make/get visual lex struct
+		// make/get visual lexf struct
 		int lexvi = 0;
-		for (; lexvi < lexvc; ++lexvi)
-			if (lexvv[lexvi].lexf == lexf) {
-				lexv = lexvv + lexvi;
+		for (; lexvi < lexfvc; ++lexvi)
+			if (lexfvv[lexvi].lexf == lexf) {
+				lexfv = lexfvv + lexvi;
 				break;}
-		if (!lexvi) memset(tknrowv, ' ', 48 * (8 + 64));
-		if (!lexv) {
-			lexvv = realloc(lexvv, sizeof(struct lexv_s) * ++lexvc);
-			lexv = lexvv + (lexvc - 1);
-			memset(lexv, 0, sizeof(struct lexv_s));
-			lexv->lexf = lexf;
-			memset(lexv->wrowv, ' ', 48 * (8 + 64));}
-		lexvicache = lexvi;}
+		if (!lexvi) memset(lexv.tknrowv, ' ', 48 * (8 + 64));
+		if (!lexfv) {
+			lexfvv = realloc(lexfvv, sizeof(struct lexfv_s) * ++lexfvc);
+			lexfv = lexfvv + (lexfvc - 1);
+			memset(lexfv, 0, sizeof(struct lexfv_s));
+			lexfv->lexf = lexf;
+			memset(lexfv->wrowv, ' ', 48 * (8 + 64));}
+		lexfvicache = lexvi;}
 
 	int newline = 0;
 	int newtoken = 0;
 	
-	while (lexf->stri > lexv->strvi) {
-		switch (lexf->str[lexv->strvi]) {
+	while (lexf->stri > lexfv->strvi) {
+		switch (lexf->str[lexfv->strvi]) {
 		case '\n':
 			++lexf->strvlinec;
 			
-			// .w code line number
+			// ding code line number
 			char linen[8];
-			int linenc = snprintf(linen, 8, "%d", lexf->strvlinec);
+			int linenc = snprintf(linen, 8, "%ld", lexf->strvlinec);
 			memmove(linen + 7 - linenc, linen, linenc);
 			memset(linen, ' ', 7 - linenc);
 			linen[7] = ' ';
 			
-			// .w code
-			lexv->w[63] = ' ';
-			
 			// append row
-			memmove(lexv->wrowv + (8 + 64), lexv->wrowv, 47 * (8 + 64));
-			memcpy(lexv->wrowv, linen, 8);
-			memcpy(lexv->wrowv + 8, lexv->w, 64);
-			memset(lexv->wrowv + 8 + lexv->wi, ' ', 64 - lexv->wi);
+			memmove(lexfv->wrowv + (8 + 64), lexfv->wrowv, 47 * (8 + 64));
+			memcpy(lexfv->wrowv, linen, 8);
+			memcpy(lexfv->wrowv + 8, lexfv->w, 64);
+			memset(lexfv->wrowv + 8 + lexfv->wi, ' ', 64 - lexfv->wi);
 			
-			// reset .w code buf
-			memset(lexv->w, 0, 64);
-			lexv->wi = 0;
+			// reset ding code buf
+			memset(lexfv->w, 0, 64);
+			lexfv->wi = 0;
 			
-		       	lexf->strvlinei = lexv->strvi + 1;
+		       	lexf->strvlinei = lexfv->strvi + 1;
 			newline = 1;
 			break;
 		case '\t':
-			// .w code, append 8 spaces (shortened if overflow)
-			if (lexv->wi > 63) break;
-			int spacec = abs((lexv->wi % 8) - 8);
-			int overflow = lexv->wi + spacec > 63;
-			spacec = overflow ? 64 - lexv->wi : spacec;
-			memset(lexv->w + lexv->wi, ' ', spacec);
-			lexv->wi = overflow ? 63 : lexv->wi + spacec;
+			// ding code, append 8 spaces (shortened if overflow)
+			if (lexfv->wi > 63) break;
+			int spacec = abs((lexfv->wi % 8) - 8);
+			int overflow = lexfv->wi + spacec > 63;
+			spacec = overflow ? 64 - lexfv->wi : spacec;
+			memset(lexfv->w + lexfv->wi, ' ', spacec);
+			lexfv->wi = overflow ? 63 : lexfv->wi + spacec;
 			break;
 		default:
-			// .w code, append char
-			if (lexv->wi > 63) break;
-			lexv->w[lexv->wi++] = lexf->str[lexv->strvi];
+			// ding code, append char
+			if (lexfv->wi > 63) break;
+			lexfv->w[lexfv->wi++] = lexf->str[lexfv->strvi];
 			break;}
-		++lexv->strvi;}
+		++lexfv->strvi;}
 	
-	while (lexer.tknc - 1 >= tknvi) { 
+	while (lexer.tknc - 1 >= lexv.tknvi) { 
 		char tkn[65]; int tknc = 0;
-		char* k; char* v;
-		switch (lexer.tknv[tknvi]) {
-		case TYPE: 
-			k = "TYPE"; 
-			v = lexer.typev[*(long*)(lexer.tknv + tknvi + 1)];
-			goto tknkv;
-		case KEYWORD: 
-			k = "KEYWORD"; 
-			v = lexer.keywv[*(long*)(lexer.tknv + tknvi + 1)];
-			goto tknkv;
-		case DIRECTIVE: 
-			k = "DIRECTIVE"; 
-			v = lexer.dirv[*(long*)(lexer.tknv + tknvi + 1)];
-			goto tknkv;
-		case ASSEMBLY: 
-			k = "ASSEMBLY";
-			v = lexer.asmv[*(long*)(lexer.tknv + tknvi + 1)];
-			goto tknkv;
-		case SECTDEF:
-		       	k = "SECTDEF";
-			v = lexer.sectv[*(long*)(lexer.tknv + tknvi + 1)];
-			goto tknkv;
-		case SECT:
-		       	k = "SECT";
-			v = lexer.sectv[*(long*)(lexer.tknv + tknvi + 1)];
-			goto tknkv;
-		case STRUCTDEF:
-		       	k = "STRUCTDEF";
-			v = lexer.structv[*(long*)(lexer.tknv + tknvi + 1)].name;
-			goto tknkv;
-		case STRUCT: 
-			k = "STRUCT";
-			v = lexer.structv[*(long*)(lexer.tknv + tknvi + 1)].name;
-			goto tknkv;
-		case INLINEDEF:
-		       	k = "INLINEDEF";
-			v = lexer.inlinev[*(long*)(lexer.tknv + tknvi + 1)];
-			goto tknkv;
-		case INLINE: 
-			k = "INLINE";
-			v = lexer.inlinev[*(long*)(lexer.tknv + tknvi + 1)];
-			goto tknkv;
-		case VARDEF: 
-			k = "VARDEF";
-			v = lexer.varv[*(long*)(lexer.tknv + tknvi + 1)].name;
-			goto tknkv;
-		case VAR: 
-			k = "VAR";
-			v = lexer.varv[*(long*)(lexer.tknv + tknvi + 1)].name;
-			goto tknkv;
-		case INCLUDE:
-			k = "INCLUDE";
-			v = lexer.fv[*(long*)(lexer.tknv + tknvi + 1)];
-			goto tknkv;
-		case STR: 
-			k = "STR";
-			v = lexer.strv[*(long*)(lexer.tknv + tknvi + 1)];
-			goto tknkv;
-		case LONG: 
-			k = "LONG";
-			static char str[32];
-			memset(str, 0, 32);
-			snprintf(str, 32, "%ld", lexer.longv[*(long*)(lexer.tknv + tknvi + 1)]);
-			v = str;
-			goto tknkv;
-		case INT: k = "INT"; v = ""; goto tknkv;
-		case SHORT: k = "SHORT"; v = ""; goto tknkv;
-		case CHAR: k = "CHAR"; v = ""; goto tknkv;
-		case SLONG: k = "SLONG"; v = ""; goto tknkv;
-		case SINT: k = "SINT"; v = ""; goto tknkv;
-		case SSHORT: k = "SSHORT"; v = ""; goto tknkv;
-		case SCHAR: k = "SCHAR"; v = ""; goto tknkv;
-		tknkv: 
-			// tkn
-			tknc = snprintf(tkn, 65, "[%s:%s]", k, v);
+		switch (lexer.tknv[lexv.tknvi]) {
+		case ASSEMBLY: {
+			struct asm_s* v = lexer.asmv + lexer.tknv[lexv.tknvi + 1];
 			
-			tknvi += 9;
-			break;
- 		case (ADD): k = "+"; goto tknk;
-		case (SUB): k = "-"; goto tknk;
-		case (MUL): k = "*"; goto tknk;
-		case (DIV): k = "/"; goto tknk;
-		case (MOD): k = "%"; goto tknk;
-		case (AND): k = "&"; goto tknk;
-		case (OR): k = "|"; goto tknk;
-		case (XOR): k = "^"; goto tknk;
-		case (NOT): k = "~"; goto tknk;
-		case (CAST): k = "?"; goto tknk;
-		case (MOV): k = ":"; goto tknk;
-		case (CASTMOV): k = "?:"; goto tknk;
-		case (ADDMOV): k = "+:"; goto tknk;
-		case (SUBMOV): k = "-:"; goto tknk;
-		case (MULMOV): k = "*:"; goto tknk;
-		case (DIVMOV): k = "/:"; goto tknk;
-		case (MODMOV): k = "%:"; goto tknk;
-		case (ANDMOV): k = "&:"; goto tknk;
-		case (ORMOV): k = "|:"; goto tknk;
-		case (XORMOV): k = "^:"; goto tknk;
-		case (NOTMOV): k = "~:"; goto tknk;
-		case (EQUALMOV): k = "=:"; goto tknk;
-		case (NOTEQUALMOV): k = "~=:"; goto tknk;
-		case (GREATEREQUALMOV): k = ">=:"; goto tknk;
-		case (LESSEREQUALMOV): k = "<=:"; goto tknk;
-		case (ANDBOOLMOV): k = "&&:"; goto tknk;
-		case (ORBOOLMOV): k = "||:"; goto tknk;
-		case (NOTBOOLMOV): k = "~~:"; goto tknk;
-		case (GREATERMOV): k = ">:"; goto tknk;
-		case (LESSERMOV): k = "<:"; goto tknk;
-		case (ADDRMOV): k = "$:"; goto tknk;
-		case (DEREFMOV): k = "@:"; goto tknk;
-		case (EQUAL): k = "="; goto tknk;
-		case (NOTEQUAL): k = "~="; goto tknk;
-		case (GREATEREQUAL): k = ">="; goto tknk;
-		case (LESSEREQUAL): k = "<="; goto tknk;
-		case (ANDBOOL): k = "&&"; goto tknk;
-		case (ORBOOL): k = "||"; goto tknk;
-		case (NOTBOOL): k = "~~"; goto tknk;
-		case (GREATER): k = ">"; goto tknk;
-		case (LESSER): k = "<"; goto tknk;
-		case (ADDR): k = "$"; goto tknk;
-		case (DEREF): k = "@"; goto tknk;
-		case (DOT): k = "."; goto tknk;
-		case (ODEREF): k = "["; goto tknk;
-		case (CDEREF): k = "]"; goto tknk;
-		case (JUMP): k = "\\"; goto tknk;
-		case (CALL): k = "!"; goto tknk;
-		case (OFUNC): k = "("; goto tknk;
-		case (CFUNC): k = ")"; goto tknk;
-		case (COMMA): k = ","; goto tknk;
-		case (OLIST): k = "{"; goto tknk;
-		case (CLIST): k = "}"; goto tknk;
-		case (DQUOTE): k = "\""; goto tknk;
-		case (SQUOTE): k = "'"; goto tknk;
-		case (TERM): k = ";"; goto tknk;
-		case (OBRACK): k = "("; goto tknk;
-		case (CBRACK): k = ")"; goto tknk;
-		tknk: 
-			// tkn
-			tknc = snprintf(tkn, 65, "[%s]", k);
-			
-			++tknvi;
-			break;
-		default:
-			++tknvi;
-			++tknvc;
-			break;}
+			// format asm str to replace '\n' with "\n" and '\t' with "\t"
+			char* fv = 0;
+			for (int vi = 0, fvi = 0; lexer.strv[v->stri + vi] != 0; ++vi) {
+				if (lexer.strv[v->stri + vi] == '\n') {
+					fvi += 2;
+					fv = realloc(fv, fvi + 1);
+					fv[fvi - 2] = '\\';
+					fv[fvi - 1] = 'n';
+					fv[fvi] = 0;}
+				else if (lexer.strv[v->stri + vi] == '\t') {
+					fvi += 2;
+					fv = realloc(fv, fvi + 1);
+					fv[fvi - 2] = '\\';
+					fv[fvi - 1] = 't';
+					fv[fvi] = 0;}
+				else {
+					++fvi;
+					fv = realloc(fv, fvi + 1);
+					fv[fvi - 1] = lexer.strv[v->stri + vi];
+					fv[fvi] = 0;}}
 
-		if (!tknc) continue;
+			tknc = snprintf(tkn, 64, "asm    %s", fv);
+			break;}	
+		case VARDEF: { 
+			struct var_s* v = lexer.varv + lexer.tknv[lexv.tknvi + 1];
+			tknc = snprintf(tkn, 64, "vardef %s", lexer.strv + v->namei);
+			break;}
+		case NUMLIT: {
+			struct numlit_s* v = lexer.numlitv + lexer.tknv[lexv.tknvi + 1];
+			tknc = snprintf(tkn, 64, "numlit %ld", v->num);
+			break;}}
+		lexv.tknvi += 2;
 
 		// tkn count number
 		char linen[8];
-		int linenc = snprintf(linen, 8, "%d", ++tknvc);
+		int linenc = snprintf(linen, 8, "%d", ++lexv.tknvc);
 		memmove(linen + 7 - linenc, linen, linenc);
 		memset(linen, ' ', 7 - linenc);
 		linen[7] = ' ';
 		
 		// append row
-		memmove(tknrowv + (8 + 64), tknrowv, 47 * (8 + 64));
-		memcpy(tknrowv, linen, 8);
-		memcpy(tknrowv + 8, tkn, 64);
-		memset(tknrowv + 8 + tknc, ' ', 64 - tknc);
-		++newtknrowi;
+		tknc = tknc > 64 ? 64 : tknc;
+		memmove(lexv.tknrowv + (8 + 64), lexv.tknrowv, 47 * (8 + 64));
+		memcpy(lexv.tknrowv, linen, 8);
+		memcpy(lexv.tknrowv + 8, tkn, 64);
+		memset(lexv.tknrowv + 8 + tknc, ' ', 64 - tknc);
+		++lexv.newtknrowi;
 		newtoken = 1;}
 
 	if (newline || newtoken) {
 		printf("\033[s");	
 		for (int i = 0; i < 48; ++i) {
 			if (i == 0 && newline) printf("\033[47m\033[30m");
-			printf("\033[%d;1H%.*s\033[0m", abs(i - 48), 8 + 64, lexv->wrowv + (i * (8 + 64)));
-			if (i < newtknrowi) printf("\033[47m\033[30m");
-			printf("%.*s\033[0m\033[K", 8 + 64, tknrowv + (i * (8 + 64)));}
+			printf("\033[%d;1H%.*s\033[0m", abs(i - 48), 8 + 64, lexfv->wrowv + (i * (8 + 64)));
+			if (i < lexv.newtknrowi) printf("\033[47m\033[30m");
+			printf("%.*s\033[0m\033[K", 8 + 64, lexv.tknrowv + (i * (8 + 64)));}
 		printf("\033[u");
 		fflush(stdout);
 		newtoken = 0;
 
-		static struct timespec ts = {0, 1000000000/100};
+		static struct timespec ts = {0};
+		ts.tv_sec = floor(delay);
+		ts.tv_nsec = (delay - floor(delay)) * 1000000000;
 		nanosleep(&ts, 0);}
 	
 	if (newline) {
 		newline = 0;
-		newtknrowi = 0;}}
+		lexv.newtknrowi = 0;}}
+
+void asmprint() {
+	int newline = 0;
+	int newtoken = 0;
+	
+	while (lexer.tknc - 1 >= lexv.tknvi) { 
+		char tkn[65]; int tknc = 0;
+		switch (lexer.tknv[lexv.tknvi]) {
+		case ASSEMBLY: {
+			struct asm_s* v = lexer.asmv + lexer.tknv[lexv.tknvi + 1];
+			
+			// format asm str to replace '\n' with "\n" and '\t' with "\t"
+			char* fv = 0;
+			for (int vi = 0, fvi = 0; lexer.strv[v->stri + vi] != 0; ++vi) {
+				if (lexer.strv[v->stri + vi] == '\n') {
+					fvi += 2;
+					fv = realloc(fv, fvi + 1);
+					fv[fvi - 2] = '\\';
+					fv[fvi - 1] = 'n';
+					fv[fvi] = 0;}
+				else if (lexer.strv[v->stri + vi] == '\t') {
+					fvi += 2;
+					fv = realloc(fv, fvi + 1);
+					fv[fvi - 2] = '\\';
+					fv[fvi - 1] = 't';
+					fv[fvi] = 0;}
+				else {
+					++fvi;
+					fv = realloc(fv, fvi + 1);
+					fv[fvi - 1] = lexer.strv[v->stri + vi];
+					fv[fvi] = 0;}}
+
+			tknc = snprintf(tkn, 64, "asm    %s", fv);
+			break;}	
+		case VARDEF: { 
+			struct var_s* v = lexer.varv + lexer.tknv[lexv.tknvi + 1];
+			tknc = snprintf(tkn, 64, "vardef %s", lexer.strv + v->namei);
+			break;}
+		case NUMLIT: {
+			struct numlit_s* v = lexer.numlitv + lexer.tknv[lexv.tknvi + 1];
+			tknc = snprintf(tkn, 64, "numlit %ld", v->num);
+			break;}}
+		lexv.tknvi += 2;
+
+		// tkn count number
+		char linen[8];
+		int linenc = snprintf(linen, 8, "%d", ++lexv.tknvc);
+		memmove(linen + 7 - linenc, linen, linenc);
+		memset(linen, ' ', 7 - linenc);
+		linen[7] = ' ';
+		
+		// append row
+		tknc = tknc > 64 ? 64 : tknc;
+		memmove(lexv.tknrowv + (8 + 64), lexv.tknrowv, 47 * (8 + 64));
+		memcpy(lexv.tknrowv, linen, 8);
+		memcpy(lexv.tknrowv + 8, tkn, 64);
+		memset(lexv.tknrowv + 8 + tknc, ' ', 64 - tknc);
+		++lexv.newtknrowi;
+		newtoken = 1;}
+
+	if (newline || newtoken) {
+		printf("\033[s");	
+		for (int i = 0; i < 48; ++i) {
+			if (i == 0 && newline) printf("\033[47m\033[30m");
+			//printf("\033[%d;1H%.*s\033[0m", abs(i - 48), 8 + 64, lexfv->wrowv + (i * (8 + 64)));
+			if (i < lexv.newtknrowi) printf("\033[47m\033[30m");
+			printf("%.*s\033[0m\033[K", 8 + 64, lexv.tknrowv + (i * (8 + 64)));}
+		printf("\033[u");
+		fflush(stdout);
+		newtoken = 0;
+
+		static struct timespec ts = {0};
+		ts.tv_sec = floor(delay);
+		ts.tv_nsec = (delay - floor(delay)) * 1000000000;
+		nanosleep(&ts, 0);}
+	
+	if (newline) {
+		newline = 0;
+		lexv.newtknrowi = 0;}}

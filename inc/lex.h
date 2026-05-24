@@ -1,56 +1,85 @@
-#ifndef W_LEX
-#define W_LEX
+#ifndef DING_LEX
+#define DING_LEX
 #include <stdio.h>
 
 struct var_s {
-	char* name;
-	char** sect;
-	char** type;
-	struct struct_s* struct_;};
+	long namei;
+	long scopei;
+	long* sectiv; long sectic;// indexes of sectv
+	long typei;		// index of typev
+	long structi;}; 	// index of structv
+
+struct asm_s {
+	long stri;	// index of strv
+	long scopei;};	// index of tknv
+
+struct numlit_s {
+	long num;
+	long scopei; // index of tknv
+	long typei;};
+
+struct strlit_s {
+	long stri;	// index of strv
+	long scopei;};	// index of tknv
 
 struct struct_s {
-	char* name;
-	struct var_s* memv; int memc;};
+	long namei;
+	long scopei;
+	long* tkniv; long tknic;}; // indexes of tknv
+
+struct inline_s {
+	long namei;
+	long scopei;
+	long* argiv; long argic;}; // indexes of varv
+
+struct type_s {
+	long namei;
+	long width;};
 
 struct def_s {
 	char* name;
-	char** keyw;
-	char** sect;
-	char** type;
-	struct struct_s* struct_;};
+	char* scope;
+	long keywi;		// index of keywv
+	long* sectiv; long sectic;// indexes of sectv
+	long typei;		// index of typev
+	long structi;}; 	// index of structv
 
 struct lexf_s {
-	int fi;
+	long fi;
 
 	char* str;
-	int stri;
-	int strtkni;
-	int strvlinei;
-	int strvlinec;
+	long stri;
+	long strtkni;
+	long strvlinei;
+	long strvlinec;
 	
-	int tkn;	
-	int tknpi;
-	int tknvardefi;
+	long tkn;	
+	long tknpi;
+	long tknvardefi;
 
 	struct def_s def;
-	int flgdef;	
-	int flgassembly;
-	int flginclude;};
+	long* defiv; long defic; // indexes of tknv
+	struct def_s funcdef;
+	long* argiv; long argic; // indexes of tknv
+	long flgdef;
+	long flgargdef;	
+	long flgassembly;
+	long flgjump; long jumpfi;};
 
 struct lexer_s {
-	char* tknv; int tknc;
-
-	char** asmv; int asmc;	
-	char** fv; int fc;	
-	char** dirv; int dirc;
-	char** keywv; int keywc;
-	char** sectv; int sectc;
-	char** inlinev; int inlinec;
-	char** typev; int typec;
-	char** strv; int strc;
-	long* longv; int longc;
-	struct var_s* varv; int varc;
-	struct struct_s* structv; int structc;};
+	char* strv; long strc;
+	
+	long* tknv; long tknc;
+	
+	long* keywv; long keywc;
+	long* sectv; long sectc;
+	struct type_s* typev; long typec;
+	struct asm_s* asmv; long asmc;	
+	struct strlit_s* strlitv; long strlitc;
+	struct numlit_s* numlitv; long numlitc;
+	struct var_s* varv; long varc;
+	struct struct_s* structv; long structc;
+	struct inline_s* inlinev; long inlinec;};
 
 enum {
 	// ids
@@ -69,14 +98,7 @@ enum {
 	INCLUDE,
 	// literals
 	STR,
-	LONG,
-	INT,
-	SHORT,
-	CHAR,
-	SLONG,
-	SINT,
-	SSHORT,
-	SCHAR,
+	NUMLIT,
 	// math operators
 	ADD,		//+
 	SUB,		//-
@@ -149,5 +171,7 @@ enum {
 extern struct lexer_s lexer;
 
 extern void lex();
+extern void lexfree();
+extern void lexread();
 
 #endif

@@ -1,7 +1,17 @@
-#ifndef W_GLOB
-#define W_GLOB
+#ifndef DING_GLOB
+#define DING_GLOB
 #include <stdio.h>
 
-extern FILE** infv; extern char** infnamev; extern int infc;
+struct f_s {
+	FILE* f;
+	char* dir;
+	char* alias;};
+
+extern struct f_s* fv; extern int fc;
+extern long asmfi;
+extern long startfi;
+extern long lexfi;
+
+extern double delay;
 
 #endif

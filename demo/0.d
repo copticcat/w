@@ -1,4 +1,4 @@
-#include std.w;
+#include std.d;
 
 text _start: {
 	data str_s a: {"Hello; w...\n"; $a.len - $a.str;};

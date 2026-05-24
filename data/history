@@ -1,0 +1,1818 @@
+help
+quit
+tldr
+quit
+tldr
+quit
+help
+quit
+help
+quit
+help
+quit
+help
+quit
+tldr
+help
+exit
+quit
+lex
+quit
+help
+tldr
+quit
+link demo/0.w
+link demo/0.d
+start demo/0.d
+lex
+delay 0.1
+lex
+quit
+lex
+start demo/0.d
+lex
+quit
+lex
+start demo/0.d
+quit
+start demo/0.d
+quit
+start demo/0.d
+lex
+quit
+tldr
+exit
+help
+quit
+lex
+start demo/0.d
+lex
+del std/std.d
+del demo/0.d
+start demo/0.d
+link std/std.d std.d
+lex
+delay 0.2
+help
+tldr
+quit
+tldr
+link demo/0.w
+link demo/0.d
+delay 0.1
+start demo/0.d
+lex
+quit
+tldr
+quit
+tldr
+quit
+tldr
+quit
+tldr
+quit
+tldr
+link demo/0.d
+unlink demo/0.d
+start demo/0.d
+lex
+quit
+start demo/0.d
+lex
+quit
+start demo/0.d
+lex
+quit
+start demo/0.d
+lex
+quit
+start demo/0.d
+lex
+quit
+start demo/0.d
+lex
+quit
+start demo/0.d
+lex
+quit
+start demo/0.d
+lex
+quit
+start demo/0.d
+lex
+quit
+start demo/0.d
+delay 0.05
+lex
+quit
+start demo/types.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+start demo/types.d
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+lex
+quit
+start demo/var.d
+delay 0.05
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+start demo/var.d
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+quit
+start demo/var.d
+delay 1
+lex var.l
+quit
+start demo/var.d
+delay 0.1
+lex var.l
+quit
+start demo/var.d
+delay 0.025
+lex var.l
+quit
+start demo/var.d
+delay 0.025
+lex var.l
+quit
+start demo/var.d
+delay 0.025
+lex var.l
+quit
+start demo/var.d
+delay 0.025
+lex var.l
+quit
+start demo/var.d
+delay 0.025
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.025
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.025
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.025
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.025
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.025
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.025
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.025
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.025
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+tldr
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+tldr
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+tldr
+start demo/0.d
+lex 0.l
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+lex lex.l
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+tldr
+lex lex.l
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+tldr
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm start demo/var.d
+delay 0.05
+lex var.l
+start demo/var.d
+delay 0.05
+lex var.l
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+start demo/var.d
+delay 0.05
+start demo/var.d
+delay 0.05
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+start demo/var.d
+lex var.l
+asm var.s
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 1
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 0.05
+start demo/var.d
+delay 0.05
+start demo/var.d
+delay 0.05
+start demo/var.d
+delay 0.05
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+delay 1
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
+start demo/var.d
+lex var.l
+asm var.s
+quit
