@@ -3,18 +3,20 @@
 
 struct asmsect_s {
 	long* sectiv; long sectic;
-	long* scopeiv; long scopeic;
+	long* tkniv; long tknic;
+	char** v; long c;
+	
 	long a; long r; long w; long x;
-	long progb; long nob;
-	char** v; long c;};
+	long progb; long nob;};
 
 struct lexa_s {
 	long tkni;
 	struct asmsect_s* sectv; long sectc;
 	char** v; long c;};
 
-extern void asm_();
-
 extern struct lexa_s lexa;
+
+extern void asm_();
+extern char* regitstr(long);
 
 #endif

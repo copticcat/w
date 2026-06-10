@@ -1,5 +1,5 @@
 #include "../inc/glob.h"
-#include "../inc/lex.h"
+#include "../inc/lex/lex.h"
 #include "../inc/asm.h"
 #include <stdio.h>
 #include <stdlib.h>
